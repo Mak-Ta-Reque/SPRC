@@ -9,8 +9,9 @@ from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
 import torch 
 
-base_path = Path(__file__).absolute().parents[1].absolute()
-
+#base_path = Path(__file__).absolute().parents[1].absolute()
+base_path = Path("/netscratch/kadir/FashionIQ/")
+img_ext = "jpg"
 def collate_fn(batch):
     '''
     function which discard None images in a batch when using torch DataLoader
@@ -164,10 +165,10 @@ class FashionIQDataset(Dataset):
                 reference_name = self.triplets[index]['candidate']
 
                 if self.split == 'train':
-                    reference_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{reference_name}.png"
+                    reference_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{reference_name}.{img_ext}"
                     reference_image = self.preprocess(PIL.Image.open(reference_image_path))
                     target_name = self.triplets[index]['target']
-                    target_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{target_name}.png"
+                    target_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{target_name}.{img_ext}"
                     target_image = self.preprocess(PIL.Image.open(target_image_path))
                     return reference_image, target_image, image_captions
 
@@ -176,13 +177,13 @@ class FashionIQDataset(Dataset):
                     return reference_name, target_name, image_captions
 
                 elif self.split == 'test':
-                    reference_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{reference_name}.png"
+                    reference_image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{reference_name}.{img_ext}"
                     reference_image = self.preprocess(PIL.Image.open(reference_image_path))
                     return reference_name, reference_image, image_captions
 
             elif self.mode == 'classic':
                 image_name = self.image_names[index]
-                image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{image_name}.png"
+                image_path = base_path / 'fashionIQ_dataset' / 'images' / f"{image_name}.{img_ext}"
                 image = self.preprocess(PIL.Image.open(image_path))
                 return image_name, image
 

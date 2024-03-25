@@ -132,3 +132,16 @@ code and pre-trained weights for rerank model
 ### Acknowledgement
 Our implementation is based on [CLIP4Cir](https://github.com/ABaldrati/CLIP4Cir) and [LAVIS](https://github.com/salesforce/LAVIS).
 
+
+## CV 2 error : solution 
+
+pip install opencv-fixer==0.2.5
+# 2. execute
+python -c "from opencv_fixer import AutoFix; AutoFix()"
+
+
+## One l;ine training command
+
+
+
+python src/blip_fine_tune_2.py    --dataset 'FashionIQ' --data-path /netscratch/kadir/FashionIQ/fashionIQ_dataset   --blip-model-name 'blip2_cir_align_prompt'    --num-epochs 30    --num-workers 4    --learning-rate 2e-5    --batch-size 128    --transform targetpad    --target-ratio 1.25     --save-training    --save-best    --validation-frequency 1 
